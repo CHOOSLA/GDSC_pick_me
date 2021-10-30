@@ -45,16 +45,29 @@ public class mainController implements Initializable {
         onInputButtonClick();
     }
 
+    //ListView에서 받아오는 값들 ( 순번이랑 테마제외 )
     List<String> nameList = null;
+    //섞기 전의 원본 이름 리스트
     ArrayList<String> arraynameList = new ArrayList<>();
+    //섞은 이름 리스트
     ArrayList<String> shufflednameList = null;
+    //섞인 테마 리스트 ( 이건 이름리스트 따라 계속 새로 만들어짐 )
     ArrayList<String> shuffledThemeList = null;
+    //섞기 버튼을 누를 때마다 새로운 칼라값 생성
     ArrayList<String> randomColorList = new ArrayList<>();
+    //테마코드 저장 장소
     ArrayList<String> pickTheme = new ArrayList<>();
 
+    //클립보드
     StringBuilder clipboardString = new StringBuilder();
 
+    //섞는 걸 또 섞을 때 필요한 변수
     int flag = 0;
+
+    //그룹 사이즈 변경
+    /******************* 그룹사이즈는 테마의 개수를 넘으면 안됨! ( 인덱스 오류 )   **************/
+    int groupSize = 2; //수정시 주의 필요!
+
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -109,6 +122,10 @@ public class mainController implements Initializable {
     }
 
 
+    private void addTheme(String alpa){
+
+    }
+    //여기서 분류별 이름 지정
     private String getTheme(String alpa){
 
         //각 테마에 대한 이름 여기서 추가
@@ -137,11 +154,19 @@ public class mainController implements Initializable {
         randomColorList = new ArrayList<>();
 
 
-        for (int i = 0; i < shufflednameList.size(); i=i+3) {
+        for (int i = 0; i < shufflednameList.size(); i=i+groupSize+1) {
             //여기 고쳐야함
-            shufflednameList.add(i,pickTheme.get(0) +":"+getTheme(pickTheme.get(0))+"   " +pickTheme.get(1) +":"+ getTheme(pickTheme.get(1)));
-            shuffledThemeList.add(pickTheme.get(0));
-            shuffledThemeList.add(pickTheme.get(1));
+
+            StringBuilder strTemp = new StringBuilder();
+            for (int j = 0; j < groupSize; j++) {
+                strTemp.append(pickTheme.get(j) +":"+getTheme(pickTheme.get(j))+"   ");
+
+
+            }
+            shufflednameList.add(i,strTemp.toString());
+            for (int j = 0; j < groupSize; j++) {
+                shuffledThemeList.add(pickTheme.get(j));
+            }
 
 
             //랜덤 칼라 값
@@ -178,6 +203,7 @@ public class mainController implements Initializable {
         }
     }
 
+    //BAD CODING 수정 가능성 있음
     class CenteredListViewCell extends ListCell<String> {
         @Override
         protected void updateItem(String item, boolean empty) {
@@ -205,8 +231,10 @@ public class mainController implements Initializable {
                     String myTheme = "";
                     //찾지 못했을 경우 찾지 않음
                     if(idx!=-1){
-                        if(idx%3!=0){ //정해진 테마가 있는 셀이면 실행하지 않음
-                            int classification = idx / 3; //2명씩 + 정해진 테마 칸(1칸) 씩 분류함
+                        if(idx%(groupSize+1)!=0){ //이름인 경우에만 즉, A : ~ B : ~ 가 있는 셀은 실행 x
+
+
+                            int classification = idx / (groupSize + 1); //2명씩 + 정해진 테마 칸(1칸) 씩 분류함
                             try{
                                 myTheme = shuffledThemeList.get(idx - classification -1 );
                             }catch(Exception e){}
