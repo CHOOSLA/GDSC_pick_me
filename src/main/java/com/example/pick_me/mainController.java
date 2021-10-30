@@ -40,8 +40,6 @@ public class mainController implements Initializable {
     ArrayList<String> shufflednameList = null;
     ArrayList<String> shuffledThemeList = null;
     ArrayList<String> randomColorList = new ArrayList<>();
-
-    ArrayList<String> themeList = new ArrayList<>();
     ArrayList<String> pickTheme = new ArrayList<>();
 
     int flag = 0;
@@ -52,10 +50,7 @@ public class mainController implements Initializable {
         memberList.setCellFactory(stringListView -> new CenteredListViewCell());
 
 
-        themeList.add("A : 개발자 MBTI");
-        themeList.add("B : 오늘의 운세");
-        themeList.add("C : 깨알 개발 퀴즈");
-
+        //여기서 테마 추가
         pickTheme.add("A");
         pickTheme.add("B");
         pickTheme.add("C");
@@ -82,6 +77,7 @@ public class mainController implements Initializable {
 
     private String getTheme(String alpa){
 
+        //각 테마에 대한 이름 여기서 추가
         if(alpa.equals("A")){
             return "개발자MBTI";
         }else if(alpa.equals("B")){
