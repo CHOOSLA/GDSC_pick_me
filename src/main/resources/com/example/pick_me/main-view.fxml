@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane fx:id="mainPane" maxHeight="800.0" maxWidth="500.0" minHeight="800.0" minWidth="500.0" prefHeight="800.0" prefWidth="500.0" style="-fx-background-color: #1E1F22;" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.pick_me.mainController">
+   <children>
+      <JFXTextField fx:id="nameTextField" alignment="CENTER" layoutX="156.0" layoutY="535.0" onAction="#onEnter" prefHeight="56.0" prefWidth="188.0" style="-fx-font-size: 30; -fx-text-fill: white;">
+         <focusColor>
+            <LinearGradient endX="0.8761904761904762" endY="0.7809523809523811" startX="0.0761904761904762" startY="0.7952380952380952">
+               <stops>
+                  <Stop color="#e34133" />
+                  <Stop color="#4081ec" offset="0.3338341346153846" />
+                  <Stop color="#0f9855" offset="0.6834025349650349" />
+                  <Stop color="#f3b604" offset="1.0" />
+               </stops>
+            </LinearGradient>
+         </focusColor></JFXTextField>
+      <JFXButton buttonType="RAISED" contentDisplay="CENTER" graphicTextGap="100.0" layoutX="375.0" layoutY="535.0" onAction="#onInputButtonClick" prefHeight="56.0" prefWidth="102.0" style="-fx-font-size: 20;" text="입력" textAlignment="RIGHT" textFill="WHITE">
+      <ripplerFill>
+         <LinearGradient endX="0.8428571428571429" endY="0.7952380952380953" startX="0.40476190476190477">
+            <stops>
+               <Stop color="#e34133" />
+               <Stop color="#4081ec" offset="0.3338341346153846" />
+               <Stop color="#0f9855" offset="0.6834025349650349" />
+               <Stop color="#f3b604" offset="1.0" />
+            </stops>
+         </LinearGradient>
+      </ripplerFill>
+      </JFXButton>
+      <Text fill="WHITE" layoutX="57.0" layoutY="574.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-size: 30;" text="이름" textAlignment="CENTER" />
+      <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="150.0" layoutY="56.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@KakaoTalk_20211029_201148193.png" />
+         </image>
+      </ImageView>
+      <JFXListView fx:id="memberList" layoutX="128.0" layoutY="145.0" prefHeight="348.0" prefWidth="245.0" style="-fx-text-fill: white;" />
+      <JFXButton fx:id="shuffleBtn" buttonType="RAISED" contentDisplay="CENTER" graphicTextGap="100.0" layoutX="199.0" layoutY="674.0" onAction="#onsuffleButtonClick" prefHeight="56.0" prefWidth="102.0" style="-fx-font-size: 20;" text="섞기" textAlignment="RIGHT" textFill="WHITE">
+         <ripplerFill>
+            <LinearGradient endX="0.8428571428571429" endY="0.7952380952380953" startX="0.40476190476190477">
+               <stops>
+                  <Stop color="#e34133" />
+                  <Stop color="#4081ec" offset="0.3338341346153846" />
+                  <Stop color="#0f9855" offset="0.6834025349650349" />
+                  <Stop color="#f3b604" offset="1.0" />
+               </stops>
+            </LinearGradient>
+         </ripplerFill>
+      </JFXButton>
+   </children>
+</AnchorPane>

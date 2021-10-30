@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXListView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.paint.LinearGradient?>
+<?import javafx.scene.paint.Stop?>
+
+<AnchorPane maxHeight="800.0" maxWidth="500.0" minHeight="800.0" minWidth="500.0" prefHeight="800.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" >
+   <children>
+      <JFXButton layoutX="151.0" layoutY="691.0" onAction="#onRandomButtonClicked" prefHeight="83.0" prefWidth="198.0" style="-fx-font-size: 30;" text="섞기">
+         <ripplerFill>
+            <LinearGradient endX="0.8428571428571429" endY="0.7952380952380953" startX="0.40476190476190477">
+               <stops>
+                  <Stop color="#e34133" />
+                  <Stop color="#4081ec" offset="0.3338341346153846" />
+                  <Stop color="#0f9855" offset="0.6834025349650349" />
+                  <Stop color="#f3b604" offset="1.0" />
+               </stops>
+            </LinearGradient>
+         </ripplerFill>
+      </JFXButton>
+      <JFXListView fx:id="member_list" layoutX="134.0" layoutY="126.0" prefHeight="494.0" prefWidth="232.0" />
+   </children>
+</AnchorPane>
