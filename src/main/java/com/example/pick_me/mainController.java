@@ -1,18 +1,24 @@
 package com.example.pick_me;
 
+import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXListView;
+import com.jfoenix.controls.JFXPopup;
 import com.jfoenix.controls.JFXTextField;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
+import javafx.scene.input.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
+import javafx.stage.Window;
 
 
 import java.io.IOException;
@@ -26,9 +32,13 @@ public class mainController implements Initializable {
     @FXML
     private JFXTextField nameTextField;
 
-
     @FXML
     JFXListView<String> memberList;
+
+    @FXML
+    JFXPopup copyPopup;
+
+    JFXButton copy;
 
     @FXML
     public void onEnter(ActionEvent e){
@@ -42,6 +52,8 @@ public class mainController implements Initializable {
     ArrayList<String> randomColorList = new ArrayList<>();
     ArrayList<String> pickTheme = new ArrayList<>();
 
+    StringBuilder clipboardString = new StringBuilder();
+
     int flag = 0;
 
     @Override
@@ -54,6 +66,28 @@ public class mainController implements Initializable {
         pickTheme.add("A");
         pickTheme.add("B");
         pickTheme.add("C");
+
+
+        //클립보드 생성
+        for (int i = 0; i < pickTheme.size(); i++) {
+            clipboardString.append(pickTheme.get(i) + " : " + getTheme(pickTheme.get(i))+"  ");
+        }
+        clipboardString.append("\n");
+        clipboardString.append("\n");
+
+        copy = new JFXButton("복사");
+        copy.setStyle("-fx-font-size: 20;");
+        copy.addEventHandler(MouseEvent.MOUSE_CLICKED,(MouseEvent e) ->{
+            if(e.getButton() == MouseButton.PRIMARY){
+                //클립보드를 시스템 클립보드로 이동
+                final ClipboardContent content = new ClipboardContent();
+                content.putString(clipboardString.toString());
+                Clipboard.getSystemClipboard().setContent(content);
+                copyPopup.hide();
+            }
+        }
+        );
+
     }
 
     @FXML
@@ -109,6 +143,7 @@ public class mainController implements Initializable {
             shuffledThemeList.add(pickTheme.get(0));
             shuffledThemeList.add(pickTheme.get(1));
 
+
             //랜덤 칼라 값
             Random random = new Random();
             int nextInt = random.nextInt(0xffffff + 1);
@@ -128,7 +163,20 @@ public class mainController implements Initializable {
         memberList.setCellFactory(stringListView -> new CenteredListViewCell());
     }
 
-    int count = 1;
+
+
+    @FXML
+    protected void onListViewClicked(MouseEvent e) throws IOException {
+        if(e.getEventType() == MouseEvent.MOUSE_CLICKED){
+            if(e.getButton() == MouseButton.SECONDARY){
+
+                copyPopup = new JFXPopup(copy);
+                Scene scene = mainPane.getScene();
+                Window window = scene.getWindow();
+                copyPopup.show(memberList,JFXPopup.PopupVPosition.TOP, JFXPopup.PopupHPosition.LEFT,e.getX(),e.getY());
+            }
+        }
+    }
 
     class CenteredListViewCell extends ListCell<String> {
         @Override
@@ -162,8 +210,10 @@ public class mainController implements Initializable {
                             try{
                                 myTheme = shuffledThemeList.get(idx - classification -1 );
                             }catch(Exception e){}
+
+                            String cellText = idx - classification + " : " + item + "  (" +myTheme + ")";
                             //번호를 붙이는 것
-                            label.setText(idx - classification + " : " + item + "  (" +myTheme + ")"); //테마가 있는 칸의 인덱스를 제외함
+                            label.setText(cellText); //테마가 있는 칸의 인덱스를 제외함
 
                             //각 칸마다 글자 크기와 색상을 지정
                             label.setStyle("-fx-text-fill: white; -fx-font-size:15;");
@@ -171,6 +221,16 @@ public class mainController implements Initializable {
                             //분류된 것들 끼리 색상 랜덤 지정
                             setStyle("-fx-background-color:"+ randomColorList.get(classification) + ";");
                             setGraphic(hBox);
+
+                            if(clipboardString.lastIndexOf(cellText)==-1){
+                                clipboardString.append(cellText);
+                                clipboardString.append("\n");
+                                if(idx%3==2){
+                                    clipboardString.append("-------------");
+                                    clipboardString.append("\n");
+                                }
+                            }
+
                         }
 
                     }
@@ -181,6 +241,7 @@ public class mainController implements Initializable {
             }
         }
     }
+
 
 
 }
